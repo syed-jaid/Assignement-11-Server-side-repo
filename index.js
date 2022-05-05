@@ -11,7 +11,7 @@ app.use(cors())
 
 
 
-const uri = "mongodb+srv://database:GS1wVWfYiLdkHHVM@cluster0.h6zfo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.USER_NAME}:${process.env.USER_PASSWORD}@cluster0.h6zfo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 async function run() {
     try {
@@ -22,7 +22,6 @@ async function run() {
             const query = {}
             const cursor = database.find(query)
             const result = await cursor.toArray()
-            console.log(result)
             res.send(result)
         })
 
