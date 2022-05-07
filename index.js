@@ -17,6 +17,7 @@ async function run() {
     try {
         await client.connect();
         const database = client.db('Allcards').collection('cards')
+        const database1 = client.db('addcards').collection('cards')
 
         // get data form database
         app.get('/cards', async (req, res) => {
@@ -50,10 +51,16 @@ async function run() {
                 $set: {
                     quantity: update.quantity,
                 },
-
             };
             console.log(updateDoc)
             const result = await database.updateOne(filter, updateDoc, options)
+            res.send(result)
+        })
+        // post data todatabase from user 
+        app.post('/add', async (req, res) => {
+            const data = req.body
+            console.log(req.body)
+            const result = await database1.insertOne(data)
             res.send(result)
         })
     } finally {
