@@ -82,7 +82,9 @@ async function run() {
     }
 }
 run().catch(console.dir);
-
+app.get('/', (req, res) => {
+    res.send('data')
+})
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
