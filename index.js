@@ -63,6 +63,21 @@ async function run() {
             const result = await database1.insertOne(data)
             res.send(result)
         })
+        // get My added data from database 
+        app.get('/myitems', async (req, res) => {
+            const query = {}
+            const cursor = database1.find(query)
+            const result = await cursor.toArray()
+            console.log(result)
+            res.send(result)
+        })
+        // delete single data from database 
+        app.delete('/Myitems/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: ObjectId(id) }
+            const result = await database1.deleteOne(query)
+            res.send(result)
+        })
     } finally {
 
     }
