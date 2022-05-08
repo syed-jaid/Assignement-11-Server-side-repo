@@ -3,7 +3,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors')
 const app = express()
 require('dotenv').config()
-const port = 5000
+const port = process.env.PORT || 5000
 
 
 app.use(express.json())
@@ -52,23 +52,22 @@ async function run() {
                     quantity: update.quantity,
                 },
             };
-            console.log(updateDoc)
             const result = await database.updateOne(filter, updateDoc, options)
             res.send(result)
         })
         // post data todatabase from user 
         app.post('/add', async (req, res) => {
             const data = req.body
-            console.log(req.body)
             const result = await database1.insertOne(data)
             res.send(result)
         })
+
         // get My added data from database 
         app.get('/myitems', async (req, res) => {
-            const query = {}
+            const email = req.query
+            const query = { email: email.jwtemail }
             const cursor = database1.find(query)
             const result = await cursor.toArray()
-            console.log(result)
             res.send(result)
         })
         // delete single data from database 
